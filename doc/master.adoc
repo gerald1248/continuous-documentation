@@ -6,6 +6,6 @@
 :sectnums:
 :leveloffset: +1
 
-include::01-intro.adoc[]
+include::01-ch1.adoc[]
 
-include::02-ch1.adoc[]
+include::02-ch2.adoc[]
