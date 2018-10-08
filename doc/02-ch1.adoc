@@ -1,0 +1,25 @@
+= Second chapter
+
+.ASCII-based artwork
+[ditaa]
+....
+           :
+           |
+/--------\ | /-------\
+|Document| | |Storage|
+|        | | |       |
+|     {d}| | |    {s}|
+\----+---/ | \-------/
+     |     |     ^
+     |     |     |
+     \-----------/
+           |
+           :
+....
+
+.Logo bitmap courtesy of https://github.com/pigment/fake-logos
+image::logo.png[Company logo]
+
+== Section
+
+CAUTION: This looks important, so be sure not to forget it.

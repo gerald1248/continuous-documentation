@@ -1,0 +1,13 @@
+apiVersion: v1
+name: continuous-documentation
+version: 0.1.0
+description: "continuous documentation"
+icon: "https://docs.helm.sh/src/img/helm-logo.svg"
+keywords:
+  - documentation
+home: https://github.com/gerald1248/continuous-documentation
+sources:
+  - https://github.com/gerald1248/continuous-documentation
+maintainers:
+  - name: gerald1248
+    email: gerald1248@gmail.com

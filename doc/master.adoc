@@ -1,0 +1,11 @@
+:imagesdir: images
+:title-logo-image: images/logo.png
+
+= Continuous documentation
+
+:sectnums:
+:leveloffset: +1
+
+include::01-intro.adoc[]
+
+include::02-ch1.adoc[]

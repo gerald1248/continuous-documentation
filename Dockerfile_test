@@ -1,0 +1,24 @@
+#!/bin/sh
+
+TEST_IMAGE_NAME="continuous-documentation-test"
+TEST_IMAGE_TAG="latest"
+
+test_Dockerfile() {
+  for PRG in curl; do
+    OUTPUT=$(docker run ${TEST_IMAGE_NAME}:${TEST_IMAGE_TAG} ${PRG} --help)
+    assertNotEquals " can't run ${PRG};" "${OUTPUT}" ""
+  done
+  # cleanup
+  docker rmi -f ${TEST_IMAGE_NAME}:${TEST_IMAGE_TAG}
+}
+
+for DEPENDENCY in docker shunit2; do
+  if [ -z $(which ${DEPENDENCY}) ]; then
+    echo "Missing dependency '${DEPENDENCY}'"
+    exit 1
+  fi
+done
+
+docker build -t "${TEST_IMAGE_NAME}:${TEST_IMAGE_TAG}" .
+
+. shunit2
