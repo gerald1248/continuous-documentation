@@ -8,6 +8,10 @@ test_Dockerfile() {
     OUTPUT=$(docker run ${TEST_IMAGE_NAME}:${TEST_IMAGE_TAG} ${PRG} --help)
     assertNotEquals " can't run ${PRG};" "${OUTPUT}" ""
   done
+
+  count=$(docker run ${TEST_IMAGE_NAME}:${TEST_IMAGE_TAG} -- grep -c '<!DOCTYPE html>' /var/www/html/index.html)
+  assertEquals " html body element missing;" ${count} 1
+
   # cleanup
   docker rmi -f ${TEST_IMAGE_NAME}:${TEST_IMAGE_TAG}
 }
