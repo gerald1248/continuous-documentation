@@ -3,15 +3,24 @@
 TEST_IMAGE_NAME="continuous-documentation-test"
 TEST_IMAGE_TAG="latest"
 
-test_Dockerfile() {
+test_Executables() {
   for PRG in curl; do
     OUTPUT=$(docker run ${TEST_IMAGE_NAME}:${TEST_IMAGE_TAG} ${PRG} --help)
     assertNotEquals " can't run ${PRG};" "${OUTPUT}" ""
   done
+}
 
-  count=$(docker run ${TEST_IMAGE_NAME}:${TEST_IMAGE_TAG} -- grep -c '<!DOCTYPE html>' /var/www/html/index.html)
-  assertEquals " html body element missing;" ${count} 1
+test_IndexFile() {
+  COUNT=$(docker run ${TEST_IMAGE_NAME}:${TEST_IMAGE_TAG} -- grep -c '<!DOCTYPE html>' /var/www/html/index.html)
+  assertEquals " html body element missing;" ${COUNT} 1
+}
 
+test_Images() {
+  IMAGES=$(docker run ${TEST_IMAGE_NAME}:${TEST_IMAGE_TAG} -- ls -d /var/www/html/images)
+  assertNotEquals " artwork folder missing;" "${IMAGES}" ""
+}
+
+test_Cleanup() {
   # cleanup
   docker rmi -f ${TEST_IMAGE_NAME}:${TEST_IMAGE_TAG}
 }
