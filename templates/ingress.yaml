@@ -9,7 +9,7 @@ spec:
   - host: {{ .Values.host | quote }}
     http:
       paths:
-      - path: /{{ .Values.name }}
+      - path: /
         backend:
           serviceName: {{ .Values.name | quote }}
           servicePort: {{ .Values.port }}
