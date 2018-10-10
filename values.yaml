@@ -1,5 +1,7 @@
 {
   "name": "continuous-documentation",
   "namespace": "default",
-  "group": "gerald1248"
+  "group": "gerald1248",
+  "port": "8080",
+  "host": "minikube.info"
 }
