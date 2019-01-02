@@ -25,7 +25,7 @@ test_Cleanup() {
   docker rmi -f ${TEST_IMAGE_NAME}:${TEST_IMAGE_TAG}
 }
 
-for DEPENDENCY in docker shunit2; do
+for DEPENDENCY in docker shunit2 pandoc; do
   if [ -z $(which ${DEPENDENCY}) ]; then
     echo "Missing dependency '${DEPENDENCY}'"
     exit 1

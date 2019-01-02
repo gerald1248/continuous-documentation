@@ -1,3 +1,3 @@
 #!/bin/sh
 
-docker run -it -v `pwd`:/documents/ asciidoctor/docker-asciidoctor ./process.sh
+docker run -it -v `pwd`:/documents/ gerald1248/asciidoctor ./process.sh

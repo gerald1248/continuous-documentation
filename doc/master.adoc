@@ -1,11 +1,14 @@
 :imagesdir: images
-:title-logo-image: images/logo.png
+:title-logo-image: static-images/logo.png
 
 = Continuous documentation
 
 :sectnums:
 :leveloffset: +1
 
-include::01-ch1.adoc[]
+include::./ch1.adoc[]
 
-include::02-ch2.adoc[]
+include::./ch2.adoc[]
+
+include::./markdown/README.md.adoc[]
+
