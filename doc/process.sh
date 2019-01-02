@@ -40,6 +40,10 @@ for FILE in `find . -name "*.adoc" | grep -v ${MAIN_OBJ} | sort -u`; do
   echo "" >>${MAIN_OBJ}
 done
 
+echo "= Printout" >> ${MAIN_OBJ}
+echo "link:master.pdf[Get the PDF]" >> ${MAIN_OBJ}
+echo "" >> ${MAIN_OBJ}
+
 # html
 asciidoctor -v -r asciidoctor-diagram -a toc=left -o ${OUTPUT_DIR}/index.html ${MAIN_OBJ}
 
