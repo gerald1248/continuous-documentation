@@ -12,6 +12,6 @@ include::./ch2.adoc[]
 
 include::./markdown/README.md.adoc[]
 
-= Printout
-link:master.pdf[Get the PDF]
+= Get the PDF
+link:master.pdf[Download master.pdf]
 

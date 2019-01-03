@@ -19,9 +19,11 @@ for FILE in `find . -type f -name "*.md" | grep -v "\./README.md"`; do
 done
 
 # prepare images folder
-for DIR in static-images `find . -type d -name images | grep -v ./output/images`; do
-  echo "Fetching images from ${DIR}"
-  cp -r ${DIR}/* output/images/
+for EXTENSION in svg png gif; do
+  for FILE in `find . -name "*.${EXTENSION}"`; do
+    echo "Copying image ${FILE}"
+    cp ${FILE} output/images/
+  done
 done
 
 cat << EOF >${MAIN_OBJ}
@@ -36,12 +38,13 @@ cat << EOF >${MAIN_OBJ}
 EOF
 
 for FILE in `find . -name "*.adoc" | grep -v ${MAIN_OBJ} | sort -u`; do
+  echo "Including file ${FILE}"
   echo "include::${FILE}[]" >>${MAIN_OBJ}
   echo "" >>${MAIN_OBJ}
 done
 
-echo "= Printout" >> ${MAIN_OBJ}
-echo "link:master.pdf[Get the PDF]" >> ${MAIN_OBJ}
+echo "= Get the PDF" >> ${MAIN_OBJ}
+echo "link:${OBJ}.pdf[Download ${OBJ}.pdf]" >> ${MAIN_OBJ}
 echo "" >> ${MAIN_OBJ}
 
 # html
