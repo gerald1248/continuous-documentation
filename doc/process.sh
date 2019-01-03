@@ -6,6 +6,19 @@ MAIN_OBJ=master.adoc
 OUTPUT_DIR=./output
 IMAGES_DST=${OUTPUT_DIR}/images
 
+translit() {
+  FILE=$1
+  for LINE in `grep "|" translit.txt`; do
+    SEARCH=`echo "${LINE}" | cut -d"|" -f1`
+    if [ `grep -c "${SEARCH}" "${FILE}"` -gt "0" ]; then
+      REPLACE=`echo ${LINE} | cut -d "|" -f2`
+      echo "${FILE}: replacing ${SEARCH} with ${REPLACE}"
+      sed -i.bak "s/${SEARCH}/${REPLACE}/" ${FILE}
+      rm ${FILE}.bak
+    fi
+  done
+}
+
 # clean
 rm -rf ${OUTPUT_DIR}/*
 
@@ -37,10 +50,11 @@ cat << EOF >${MAIN_OBJ}
 
 EOF
 
-for FILE in `find . -name "*.adoc" | grep -v ${MAIN_OBJ} | sort -u`; do
+for FILE in `find . -type f -name "*.adoc" | grep -v ${MAIN_OBJ} | sort -u`; do
   echo "Including file ${FILE}"
   echo "include::${FILE}[]" >>${MAIN_OBJ}
   echo "" >>${MAIN_OBJ}
+  translit ${FILE}
 done
 
 echo "= Get the PDF" >> ${MAIN_OBJ}
