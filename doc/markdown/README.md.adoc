@@ -1,3 +1,0 @@
-== Sample Markdown document
-
-This is some text [.emoji]#😄#.

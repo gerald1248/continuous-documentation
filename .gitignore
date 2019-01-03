@@ -1,2 +1,2 @@
 **/.asciidoctor
-**/README.md.adoc
+./doc/markdown/README.md.adoc
