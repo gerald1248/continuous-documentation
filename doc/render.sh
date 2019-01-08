@@ -57,6 +57,9 @@ cat << EOF >${MAIN_OBJ}
 :imagesdir: images
 :title-logo-image: static-images/logo.png
 :toclevels: 3
+:source-highlighter: pygments
+:pygments-style: emacs
+:icons: font
 
 = ${TITLE}
 

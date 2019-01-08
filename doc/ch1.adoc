@@ -9,7 +9,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 * Bullet point 3
 
 .Activity diagram
-[plantuml]
+[plantuml, activity, svg]
 ----
 @startuml
 
@@ -20,3 +20,25 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 @enduml
 ----
+
+== Creating an application
+ 
+To create a simple Ratpack application we write
+the following code:
+ 
+.Simple Groovy Ratpack application
+[source,groovy,linenums,highlight='8']
+----
+package com.mrhaki
+ 
+import static ratpack.groovy.Groovy.ratpack
+ 
+ratpack {
+    handlers {
+        get {
+            render "Hello World!" // <1>
+        }
+    }
+}
+----
+<1> Render output
