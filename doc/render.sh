@@ -6,13 +6,27 @@ MAIN_OBJ=master.adoc
 OUTPUT_DIR=./output
 IMAGES_DST=${OUTPUT_DIR}/images
 
+foldername() {
+  FILE=$1
+  dirname ${FILE} | sed 's/.*\///'
+}
+
+foldertitle() {
+  FILE=$1
+  foldername ${FILE} | tr '[:lower:]' '[:upper:]' | tr '_' ' '
+}
+
+nestingdepth() {
+  FILE=$1
+  dirname ${FILE} | sed 's/\.//' | tr -cd '/' | wc -c
+}
+
 translit() {
   FILE=$1
   for LINE in `grep "|" translit.txt`; do
     SEARCH=`echo "${LINE}" | cut -d"|" -f1`
     if [ `grep -c "${SEARCH}" "${FILE}"` -gt "0" ]; then
       REPLACE=`echo ${LINE} | cut -d "|" -f2`
-      echo "${FILE}: replacing ${SEARCH} with ${REPLACE}"
       sed -i.bak "s/${SEARCH}/${REPLACE}/" ${FILE}
       rm ${FILE}.bak
     fi
@@ -42,20 +56,48 @@ done
 cat << EOF >${MAIN_OBJ}
 :imagesdir: images
 :title-logo-image: static-images/logo.png
+:toclevels: 3
 
 = ${TITLE}
 
 :sectnums:
-:leveloffset: +1
+:leveloffset: 1
 
 EOF
 
+NESTINGDEPTH=0
+SECTIONTITLE=""
 for FILE in `find . -type f -name "*.adoc" | grep -v ${MAIN_OBJ} | sort -u`; do
   echo "Including file ${FILE}"
+
+  # handle nesting for spine
+  NEWDEPTH=`nestingdepth ${FILE}`
+  NEWTITLE=`foldertitle ${FILE}`
+  if [ ${NEWDEPTH} -gt ${NESTINGDEPTH} ]; then
+    OFFSET=$((1 + ${NEWDEPTH}))
+    echo ":leveloffset: ${OFFSET}" >>${MAIN_OBJ}
+    echo "= ${NEWTITLE}" >>${MAIN_OBJ}
+    echo "" >>${MAIN_OBJ}
+  elif [ ${NEWDEPTH} -eq ${NESTINGDEPTH} ] && \
+       [ ${NESTINGDEPTH} -ne 0 ] && \
+       [ ${NEWTITLE} != ${SECTIONTITLE} ]; then
+    echo "= ${NEWTITLE}" >>${MAIN_OBJ}
+    echo "" >>${MAIN_OBJ}
+  elif [ ${NEWDEPTH} -lt ${NESTINGDEPTH} ]; then
+    OFFSET=$((1 + ${NEWDEPTH}))
+    echo ":leveloffset: ${OFFSET}" >>${MAIN_OBJ}
+    echo "" >>${MAIN_OBJ}
+  fi
+  NESTINGDEPTH=${NEWDEPTH}
+  SECTIONTITLE=${NEWTITLE}
+
   echo "include::${FILE}[]" >>${MAIN_OBJ}
   echo "" >>${MAIN_OBJ}
   translit ${FILE}
 done
+
+echo ":leveloffset: 1" >>${MAIN_OBJ}
+echo "" >>${MAIN_OBJ}
 
 echo "= Get the PDF" >> ${MAIN_OBJ}
 echo "link:${OBJ}.pdf[Download ${OBJ}.pdf]" >> ${MAIN_OBJ}

@@ -1,7 +1,7 @@
-create:
-	./create.sh
+build:
+	./build.sh
 
 clean:
 	./clean.sh
 
-default: create
+default: build
