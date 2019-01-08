@@ -1,6 +1,7 @@
 #!/bin/sh
 
-TITLE=`cat title.txt`
+TITLE= $(shell jq -r .title values.yaml)
+FILENAME= $(shell jq -r .filename values.yaml)
 OBJ=master
 MAIN_OBJ=master.adoc
 OUTPUT_DIR=./output
@@ -60,6 +61,7 @@ cat << EOF >${MAIN_OBJ}
 :source-highlighter: pygments
 :pygments-style: emacs
 :icons: font
+:stem: latexmath
 
 = ${TITLE}
 

@@ -4,6 +4,7 @@
 :source-highlighter: pygments
 :pygments-style: emacs
 :icons: font
+:stem: latexmath
 
 = Continuous documentation
 
