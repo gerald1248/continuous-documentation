@@ -1,4 +1,8 @@
 {
   "title": "Continuous documentation",
-  "filename": "continuous-documentation"  
+  "filename": "continuous-documentation",
+  "substitutions": {
+    "124816": "011235",
+    "Fibonacci": "Iccanobif"
+  }
 }

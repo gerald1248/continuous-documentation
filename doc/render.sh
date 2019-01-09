@@ -1,9 +1,9 @@
 #!/bin/sh
 
-TITLE= $(shell jq -r .title values.yaml)
-FILENAME= $(shell jq -r .filename values.yaml)
+TITLE=`jq -r .title values.json`
+FILENAME=`jq -r .filename values.json`
 OBJ=master
-MAIN_OBJ=master.adoc
+DOC=${OBJ}.adoc
 OUTPUT_DIR=./output
 IMAGES_DST=${OUTPUT_DIR}/images
 
@@ -24,12 +24,11 @@ nestingdepth() {
 
 translit() {
   FILE=$1
-  for LINE in `grep "|" translit.txt`; do
-    SEARCH=`echo "${LINE}" | cut -d"|" -f1`
-    if [ `grep -c "${SEARCH}" "${FILE}"` -gt "0" ]; then
-      REPLACE=`echo ${LINE} | cut -d "|" -f2`
-      sed -i.bak "s/${SEARCH}/${REPLACE}/" ${FILE}
-      rm ${FILE}.bak
+  for KEY in `jq -r '.substitutions | keys[]' values.json`; do
+    VALUE=`jq -r ".substitutions | .[\"${KEY}\"]" values.json`
+    if [ `grep -c "${KEY}" "${FILE}"` -gt "0" ]; then
+      sed -i.bak "s/${KEY}/${VALUE}/" ${FILE}
+      rm -f ${FILE}.bak
     fi
   done
 }
@@ -54,7 +53,7 @@ for EXTENSION in svg png gif; do
   done
 done
 
-cat << EOF >${MAIN_OBJ}
+cat << EOF >${DOC}
 :imagesdir: images
 :title-logo-image: static-images/logo.png
 :toclevels: 3
@@ -72,7 +71,7 @@ EOF
 
 NESTINGDEPTH=0
 SECTIONTITLE=""
-for FILE in `find . -type f -name "*.adoc" | grep -v ${MAIN_OBJ} | sort -u`; do
+for FILE in `find . -type f -name "*.adoc" | grep -v ${DOC} | sort -u`; do
   echo "Including file ${FILE}"
 
   # handle nesting for spine
@@ -80,36 +79,36 @@ for FILE in `find . -type f -name "*.adoc" | grep -v ${MAIN_OBJ} | sort -u`; do
   NEWTITLE=`foldertitle ${FILE}`
   if [ ${NEWDEPTH} -gt ${NESTINGDEPTH} ]; then
     OFFSET=$((1 + ${NEWDEPTH}))
-    echo ":leveloffset: ${OFFSET}" >>${MAIN_OBJ}
-    echo "= ${NEWTITLE}" >>${MAIN_OBJ}
-    echo "" >>${MAIN_OBJ}
+    echo ":leveloffset: ${OFFSET}" >>${DOC}
+    echo "= ${NEWTITLE}" >>${DOC}
+    echo "" >>${DOC}
   elif [ ${NEWDEPTH} -eq ${NESTINGDEPTH} ] && \
        [ ${NESTINGDEPTH} -ne 0 ] && \
        [ ${NEWTITLE} != ${SECTIONTITLE} ]; then
-    echo "= ${NEWTITLE}" >>${MAIN_OBJ}
-    echo "" >>${MAIN_OBJ}
+    echo "= ${NEWTITLE}" >>${DOC}
+    echo "" >>${DOC}
   elif [ ${NEWDEPTH} -lt ${NESTINGDEPTH} ]; then
     OFFSET=$((1 + ${NEWDEPTH}))
-    echo ":leveloffset: ${OFFSET}" >>${MAIN_OBJ}
-    echo "" >>${MAIN_OBJ}
+    echo ":leveloffset: ${OFFSET}" >>${DOC}
+    echo "" >>${DOC}
   fi
   NESTINGDEPTH=${NEWDEPTH}
   SECTIONTITLE=${NEWTITLE}
 
-  echo "include::${FILE}[]" >>${MAIN_OBJ}
-  echo "" >>${MAIN_OBJ}
+  echo "include::${FILE}[]" >>${DOC}
+  echo "" >>${DOC}
   translit ${FILE}
 done
 
-echo ":leveloffset: 1" >>${MAIN_OBJ}
-echo "" >>${MAIN_OBJ}
+echo ":leveloffset: 1" >>${DOC}
+echo "" >>${DOC}
 
-echo "= Get the PDF" >> ${MAIN_OBJ}
-echo "link:${OBJ}.pdf[Download ${OBJ}.pdf]" >> ${MAIN_OBJ}
-echo "" >> ${MAIN_OBJ}
+echo "= Get the PDF" >> ${DOC}
+echo "link:${OBJ}.pdf[Download ${OBJ}.pdf]" >> ${DOC}
+echo "" >> ${DOC}
 
 # html
-asciidoctor -v -r asciidoctor-diagram -a toc=left -o ${OUTPUT_DIR}/index.html ${MAIN_OBJ}
+asciidoctor -v -r asciidoctor-diagram -a toc=left -o ${OUTPUT_DIR}/index.html ${DOC}
 
 # pdf
-asciidoctor-pdf -r asciidoctor-diagram -a toc=left -a imagesdir=${IMAGES_DST} -a imagesoutdir=${IMAGES_DST} -o ${OUTPUT_DIR}/${OBJ}.pdf ${MAIN_OBJ}
+asciidoctor-pdf -r asciidoctor-diagram -a toc=left -a imagesdir=${IMAGES_DST} -a imagesoutdir=${IMAGES_DST} -o ${OUTPUT_DIR}/${OBJ}.pdf ${DOC}

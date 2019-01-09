@@ -23,10 +23,3 @@ image::logo.png[Company logo]
 == Section
 
 CAUTION: This looks important, so be sure not to forget it.
-
-== How about some maths
-
-[stem] 
-++++ 
-sqrt(4) = 2
-++++

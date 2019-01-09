@@ -11,13 +11,6 @@ To document your own projects, consider including your own Git repositories as g
 
 The generated HTML page consolidates all images in a single `images` folder and ends with a download link to the PDF.
 
-Personalisation
+Getting started
 ---------------
-Start by adjusting the file `doc/title.txt`. It should contain the title of your project.
-
-If images (with relative paths) are stored in folders other than `images`, simple string lookups can be added to the process by filling in the file `translit.txt`. Enter the `find` and `replace` expressions as follows:
-
-```
-search string|replacement string
-another search string|another replacement string
-```
+Start by adjusting the file `values.json`. It contains the `title` of your project as it will appear at the top of the HTML output and on the title page of the PDF version. Another key is `filename`, which determines the name of the PDF outputl. (The web page always takes `index.html`.)
