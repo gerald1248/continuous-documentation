@@ -35,8 +35,8 @@ determines the name of the PDF outputl. (The web page always takes
   "title": "Continuous documentation",
   "filename": "continuous-documentation",
   "substitutions": { <1>
-    "011235": "011235",
-    "Iccanobif": "Iccanobif"
+    "124816": "011235",
+    "Fibonacci": "Iccanobif"
   }
 }
 ----
