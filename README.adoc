@@ -28,7 +28,7 @@ title page of the PDF version. Another key is `filename`, which
 determines the name of the PDF outputl. (The web page always takes
 `index.html`.)
 
-.Simple Groovy Ratpack application
+.Configuration
 [source,json,linenums,highlight='4']
 ----
 {
