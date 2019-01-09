@@ -1,0 +1,49 @@
+= Continuous documentation
+
+image:https://img.shields.io/docker/automated/gerald1248/continuous-documentation.svg[Docker
+Automated]
+image:https://img.shields.io/docker/build/gerald1248/continuous-documentation.svg[Docker
+Build]
+
+Use this repo to generate HTML-with-PDF documentation for arbitrary
+collections of Asciidoc and Markdown files.
+
+Conversion is handled by the separate image
+https://github.com/gerald1248/asciidoctor[gerald1248/asciidoctor], which
+derives from the upstream image
+https://github.com/asciidoctor/docker-asciidoctor[asciidoctor/asciidoctor],
+adding `pandoc` and charting plugins.
+
+To document your own projects, consider including your own Git
+repositories as git modules in subfolders or simply copy the contents of this folder to the root folder of your repository, taking care not to overwrite files you care about.
+
+The generated HTML page consolidates all images in a single `images`
+folder and ends with a download link to the PDF.
+
+== Getting started
+
+Start by adjusting the file `values.json`. It contains the `title` of
+your project as it will appear at the top of the HTML output and on the
+title page of the PDF version. Another key is `filename`, which
+determines the name of the PDF outputl. (The web page always takes
+`index.html`.)
+
+.Simple Groovy Ratpack application
+[source,json,linenums,highlight='4']
+----
+{
+  "title": "Continuous documentation",
+  "filename": "continuous-documentation",
+  "substitutions": { <1>
+    "011235": "011235",
+    "Iccanobif": "Iccanobif"
+  }
+}
+----
+<1> This lookup table helps with cross-references and resource paths that would otherwise not be linked correctly. Keys and values represent `find` and `replace` expressions.
+
+== Build
+
+....
+$ make [build]
+....

@@ -508,35 +508,109 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_first_chapter">1. First chapter</a>
+<li><a href="#_continuous_documentation">1. Continuous documentation</a>
 <ul class="sectlevel2">
-<li><a href="#_creating_an_application">1.1. Creating an application</a></li>
-</ul>
-</li>
-<li><a href="#_second_chapter">2. Second chapter</a>
-<ul class="sectlevel2">
-<li><a href="#_section">2.1. Section</a></li>
-<li><a href="#_markdown">2.2. MARKDOWN</a>
+<li><a href="#_getting_started">1.1. Getting started</a></li>
+<li><a href="#_build">1.2. Build</a></li>
+<li><a href="#_test_content">1.3. TEST-CONTENT</a></li>
+<li><a href="#_first_chapter">1.4. First chapter</a>
 <ul class="sectlevel3">
-<li><a href="#_sample_markdown_document">2.2.1. Sample Markdown document</a></li>
+<li><a href="#_creating_an_application">1.4.1. Creating an application</a></li>
 </ul>
 </li>
-<li><a href="#_sample_repo">2.3. SAMPLE-REPO</a>
+<li><a href="#_second_chapter">1.5. Second chapter</a>
 <ul class="sectlevel3">
-<li><a href="#_sample_repo_2">2.3.1. Sample-repo</a></li>
-<li><a href="#_nested_folder">2.3.2. NESTED-FOLDER</a></li>
+<li><a href="#_section">1.5.1. Section</a></li>
+<li><a href="#_markdown">1.5.2. MARKDOWN</a></li>
+<li><a href="#_sample_repo">1.5.3. SAMPLE-REPO</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#_get_the_pdf">3. Get the PDF</a></li>
+<li><a href="#_get_the_pdf">2. Get the PDF</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_first_chapter">1. First chapter</h2>
+<h2 id="_continuous_documentation">1. Continuous documentation</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p><span class="image"><img src="https://img.shields.io/docker/automated/gerald1248/continuous-documentation.svg" alt="Docker Automated"></span>
+<span class="image"><img src="https://img.shields.io/docker/build/gerald1248/continuous-documentation.svg" alt="Docker Build"></span></p>
+</div>
+<div class="paragraph">
+<p>Use this repo to generate HTML-with-PDF documentation for arbitrary
+collections of Asciidoc and Markdown files.</p>
+</div>
+<div class="paragraph">
+<p>Conversion is handled by the separate image
+<a href="https://github.com/gerald1248/asciidoctor">gerald1248/asciidoctor</a>, which
+derives from the upstream image
+<a href="https://github.com/asciidoctor/docker-asciidoctor">asciidoctor/asciidoctor</a>,
+adding <code>pandoc</code> and charting plugins.</p>
+</div>
+<div class="paragraph">
+<p>To document your own projects, consider including your own Git
+repositories as git modules in subfolders or simply copy the contents of this folder to the root folder of your repository, taking care not to overwrite files you care about.</p>
+</div>
+<div class="paragraph">
+<p>The generated HTML page consolidates all images in a single <code>images</code>
+folder and ends with a download link to the PDF.</p>
+</div>
+<div class="sect2">
+<h3 id="_getting_started">1.1. Getting started</h3>
+<div class="paragraph">
+<p>Start by adjusting the file <code>values.json</code>. It contains the <code>title</code> of
+your project as it will appear at the top of the HTML output and on the
+title page of the PDF version. Another key is <code>filename</code>, which
+determines the name of the PDF outputl. (The web page always takes
+<code>index.html</code>.)</p>
+</div>
+<div class="listingblock">
+<div class="title">Simple Groovy Ratpack application</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="json"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7
+8</div></td><td class="code"><span></span><span class="tok-p">{</span>
+  <span class="tok-nt">&quot;title&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;Continuous documentation&quot;</span><span class="tok-p">,</span>
+  <span class="tok-nt">&quot;filename&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;continuous-documentation&quot;</span><span class="tok-p">,</span>
+<span class="hll">  <span class="tok-nt">&quot;substitutions&quot;</span><span class="tok-p">:</span> <span class="tok-p">{</span> <i class="conum" data-value="1"></i><b>(1)</b>
+</span>    <span class="tok-nt">&quot;011235&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;011235&quot;</span><span class="tok-p">,</span>
+    <span class="tok-nt">&quot;Iccanobif&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;Iccanobif&quot;</span>
+  <span class="tok-p">}</span>
+<span class="tok-p">}</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>This lookup table helps with cross-references and resource paths that would otherwise not be linked correctly. Keys and values represent <code>find</code> and <code>replace</code> expressions.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_build">1.2. Build</h3>
+<div class="literalblock">
+<div class="content">
+<pre>$ make [build]</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_test_content">1.3. TEST-CONTENT</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_first_chapter">1.4. First chapter</h3>
 <div class="paragraph">
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 </div>
@@ -559,8 +633,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="title">Figure 1. Activity diagram</div>
 </div>
-<div class="sect2">
-<h3 id="_creating_an_application">1.1. Creating an application</h3>
+<div class="sect3">
+<h4 id="_creating_an_application">1.4.1. Creating an application</h4>
 <div class="paragraph">
 <p>To create a simple Ratpack application we write
 the following code:</p>
@@ -602,10 +676,8 @@ the following code:</p>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_second_chapter">2. Second chapter</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_second_chapter">1.5. Second chapter</h3>
 <div class="imageblock">
 <div class="content">
 <img src="images/doc-storage.svg" alt="doc storage" width="260" height="224">
@@ -618,8 +690,8 @@ the following code:</p>
 </div>
 <div class="title">Figure 3. Logo bitmap courtesy of <a href="https://github.com/pigment/fake-logos" class="bare">https://github.com/pigment/fake-logos</a></div>
 </div>
-<div class="sect2">
-<h3 id="_section">2.1. Section</h3>
+<div class="sect3">
+<h4 id="_section">1.5.1. Section</h4>
 <div class="admonitionblock caution">
 <table>
 <tr>
@@ -633,10 +705,10 @@ This looks important, so be sure not to forget it.
 </table>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_markdown">2.2. MARKDOWN</h3>
 <div class="sect3">
-<h4 id="_sample_markdown_document">2.2.1. Sample Markdown document</h4>
+<h4 id="_markdown">1.5.2. MARKDOWN</h4>
+<div class="sect4">
+<h5 id="_sample_markdown_document">Sample Markdown document</h5>
 <div class="paragraph">
 <p>This is some text <span class="emoji">😄</span>.</p>
 </div>
@@ -648,34 +720,35 @@ This looks important, so be sure not to forget it.
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_sample_repo">2.3. SAMPLE-REPO</h3>
 <div class="sect3">
-<h4 id="_sample_repo_2">2.3.1. Sample-repo</h4>
+<h4 id="_sample_repo">1.5.3. SAMPLE-REPO</h4>
+<div class="sect4">
+<h5 id="_sample_repo_2">Sample-repo</h5>
 
 </div>
-<div class="sect3">
-<h4 id="_nested_folder">2.3.2. NESTED-FOLDER</h4>
 <div class="sect4">
-<h5 id="_nested_folder_2">Nested folder</h5>
+<h5 id="_nested_folder">NESTED-FOLDER</h5>
+<div class="sect5">
+<h6 id="_nested_folder_2">Nested folder</h6>
 
+</div>
 </div>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_get_the_pdf">3. Get the PDF</h2>
+<h2 id="_get_the_pdf">2. Get the PDF</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="master.pdf">Download master.pdf</a></p>
+<p><a href="continuous-documentation.pdf">Download continuous-documentation.pdf</a></p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-01-09 07:48:10 UTC
+Last updated 2019-01-09 17:32:28 UTC
 </div>
 </div>
 <script type="text/x-mathjax-config">

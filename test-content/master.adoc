@@ -11,6 +11,8 @@
 :sectnums:
 :leveloffset: 1
 
+include::./README.md.adoc[]
+
 include::./ch1.adoc[]
 
 include::./ch2.adoc[]

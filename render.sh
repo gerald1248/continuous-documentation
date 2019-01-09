@@ -40,7 +40,7 @@ rm -rf ${OUTPUT_DIR}/*
 mkdir -p ${IMAGES_DST}
 
 # markdown filter
-for FILE in `find . -type f -name "*.md" | grep -v "\./README.md"`; do
+for FILE in `find . -type f -name "*.md"`; do
   echo "Converting ${FILE}"
   pandoc ${FILE} -f markdown+emoji -t asciidoc -o ${FILE}.adoc
 done
@@ -104,11 +104,11 @@ echo ":leveloffset: 1" >>${DOC}
 echo "" >>${DOC}
 
 echo "= Get the PDF" >> ${DOC}
-echo "link:${OBJ}.pdf[Download ${OBJ}.pdf]" >> ${DOC}
+echo "link:${FILENAME}.pdf[Download ${FILENAME}.pdf]" >> ${DOC}
 echo "" >> ${DOC}
 
 # html
-asciidoctor -v -r asciidoctor-diagram -a toc=left -o ${OUTPUT_DIR}/index.html ${DOC}
+asciidoctor -v -r asciidoctor-diagram -a toc=left -a allow-uri-read -o ${OUTPUT_DIR}/index.html ${DOC}
 
 # pdf
-asciidoctor-pdf -r asciidoctor-diagram -a toc=left -a imagesdir=${IMAGES_DST} -a imagesoutdir=${IMAGES_DST} -o ${OUTPUT_DIR}/${OBJ}.pdf ${DOC}
+asciidoctor-pdf -r asciidoctor-diagram -a toc=left -a allow-uri-read -a imagesdir=${IMAGES_DST} -a imagesoutdir=${IMAGES_DST} -o ${OUTPUT_DIR}/${FILENAME}.pdf ${DOC}

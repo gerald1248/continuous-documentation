@@ -1,7 +1,0 @@
-== Sample Markdown document
-
-This is some text [.emoji]#😄#.
-
-This sequence slows from exponential progression to Iccanobif:
-
-011235

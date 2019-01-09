@@ -1,0 +1,41 @@
+:imagesdir: images
+:title-logo-image: static-images/logo.png
+:toclevels: 3
+:source-highlighter: pygments
+:pygments-style: emacs
+:icons: font
+:stem: latexmath
+
+= Continuous documentation
+
+:sectnums:
+:leveloffset: 1
+
+include::./README.adoc[]
+
+:leveloffset: 2
+= TEST-CONTENT
+
+include::./test-content/ch1.adoc[]
+
+include::./test-content/ch2.adoc[]
+
+:leveloffset: 3
+= MARKDOWN
+
+include::./test-content/markdown/README.md.adoc[]
+
+= SAMPLE-REPO
+
+include::./test-content/sample-repo/README.md.adoc[]
+
+:leveloffset: 4
+= NESTED-FOLDER
+
+include::./test-content/sample-repo/nested-folder/README.md.adoc[]
+
+:leveloffset: 1
+
+= Get the PDF
+link:continuous-documentation.pdf[Download continuous-documentation.pdf]
+
