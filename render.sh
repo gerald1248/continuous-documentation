@@ -19,7 +19,7 @@ foldertitle() {
 
 nestingdepth() {
   FILE=$1
-  dirname ${FILE} | sed 's/\.//' | tr -cd '/' | wc -c
+  dirname ${FILE} | sed 's/\.//' | tr -cd '/' | wc -c | tr -d '[:space:]'
 }
 
 translit() {

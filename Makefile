@@ -4,4 +4,7 @@ build:
 clean:
 	./clean.sh
 
+test:
+	./test.sh
+
 default: build
