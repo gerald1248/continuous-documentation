@@ -1,8 +1,4 @@
 Sample Markdown document
 ========================
 
-This is some text :smile:.
-
-This sequence slows from exponential progression to Fibonacci:
-
-124816
+In HTML the following should appear as an emoji: :smile:.

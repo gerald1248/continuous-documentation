@@ -28,10 +28,18 @@ translit() {
     VALUE=`jq -r ".substitutions | .[\"${KEY}\"]" values.json`
     if [ `grep -c "${KEY}" "${FILE}"` -gt "0" ]; then
       sed -i.bak "s/${KEY}/${VALUE}/" ${FILE}
-      rm -f ${FILE}.bak
     fi
   done
+  # for images imported from Markdown, adjust image paths here
+  sed -i.bak "s/image:images\//image:/" ${FILE}
+  sed -i.bak "s/image::images\//image:/" ${FILE}
+  rm -f ${FILE}.bak
 }
+
+# don't proceed if testing the above functions only
+if [ ! -z ${CONTINUOUS_DOCUMENTATION_TEST} ]; then
+  return 0
+fi
 
 # clean
 rm -rf ${OUTPUT_DIR}/*

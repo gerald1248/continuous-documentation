@@ -508,21 +508,22 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_continuous_documentation">1. Continuous documentation</a>
+<li><a href="#_about_this_repo">1. About this repo</a>
 <ul class="sectlevel2">
 <li><a href="#_getting_started">1.1. Getting started</a></li>
 <li><a href="#_build">1.2. Build</a></li>
 <li><a href="#_test_content">1.3. TEST-CONTENT</a></li>
-<li><a href="#_first_chapter">1.4. First chapter</a>
+<li><a href="#_k8s_analysis">1.4. k8s-analysis</a>
 <ul class="sectlevel3">
-<li><a href="#_creating_an_application">1.4.1. Creating an application</a></li>
+<li><a href="#_install">1.4.1. Install</a></li>
+<li><a href="#_cleanup">1.4.2. Cleanup</a></li>
+<li><a href="#_creating_and_assigning_a_cluster_role">1.4.3. Creating and assigning a cluster role</a></li>
 </ul>
 </li>
-<li><a href="#_second_chapter">1.5. Second chapter</a>
+<li><a href="#_the_great_american_novel">1.5. The Great American Novel</a>
 <ul class="sectlevel3">
-<li><a href="#_section">1.5.1. Section</a></li>
-<li><a href="#_markdown">1.5.2. MARKDOWN</a></li>
-<li><a href="#_sample_repo">1.5.3. SAMPLE-REPO</a></li>
+<li><a href="#_markdown">1.5.1. MARKDOWN</a></li>
+<li><a href="#_sample_repo">1.5.2. SAMPLE-REPO</a></li>
 </ul>
 </li>
 </ul>
@@ -533,7 +534,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_continuous_documentation">1. Continuous documentation</h2>
+<h2 id="_about_this_repo">1. About this repo</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><span class="image"><img src="https://img.shields.io/docker/automated/gerald1248/continuous-documentation.svg" alt="Docker Automated"></span>
@@ -568,7 +569,7 @@ determines the name of the PDF outputl. (The web page always takes
 <code>index.html</code>.)</p>
 </div>
 <div class="listingblock">
-<div class="title">Simple Groovy Ratpack application</div>
+<div class="title">Configuration</div>
 <div class="content">
 <pre class="pygments highlight"><code data-lang="json"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
 2
@@ -576,15 +577,13 @@ determines the name of the PDF outputl. (The web page always takes
 4
 5
 6
-7
-8</div></td><td class="code"><span></span><span class="tok-p">{</span>
+7</div></td><td class="code"><span></span><span class="tok-p">{</span>
   <span class="tok-nt">&quot;title&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;Continuous documentation&quot;</span><span class="tok-p">,</span>
   <span class="tok-nt">&quot;filename&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;continuous-documentation&quot;</span><span class="tok-p">,</span>
 <span class="hll">  <span class="tok-nt">&quot;substitutions&quot;</span><span class="tok-p">:</span> <span class="tok-p">{</span> <i class="conum" data-value="1"></i><b>(1)</b>
-</span>    <span class="tok-nt">&quot;011235&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;011235&quot;</span><span class="tok-p">,</span>
-    <span class="tok-nt">&quot;Iccanobif&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;Iccanobif&quot;</span>
-  <span class="tok-p">}</span>
-<span class="tok-p">}</span>
+</span><span class="hll">    <span class="tok-nt">&quot;Fibonacci&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;Iccanobif&quot;</span>
+</span><span class="hll">  <span class="tok-p">}</span>
+</span><span class="tok-p">}</span>
 </td></tr></table></code></pre>
 </div>
 </div>
@@ -610,39 +609,63 @@ determines the name of the PDF outputl. (The web page always takes
 
 </div>
 <div class="sect2">
-<h3 id="_first_chapter">1.4. First chapter</h3>
+<h3 id="_k8s_analysis">1.4. k8s-analysis</h3>
 <div class="paragraph">
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<p>Analysis pod for debugging: deploy within your project and run <code>ab</code>, <code>dig</code>, <code>netstat</code>, <code>nslookup</code>, <code>telnet</code>, <code>traceroute</code>, <code>wget</code>, and so on as well as database clients for MySQL and PostgreSQL.</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Bullet point 1</p>
-</li>
-<li>
-<p>Bullet point 2</p>
-</li>
-<li>
-<p>Bullet point 3</p>
-</li>
-</ul>
+<div class="sect3">
+<h4 id="_install">1.4.1. Install</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ make install
+helm install --name=k8s-analysis .
+NAME:   k8s-analysis
+LAST DEPLOYED: Mon Oct  1 00:12:28 2018
+NAMESPACE: default
+STATUS: DEPLOYED
+
+RESOURCES:
+==&gt; v1/Deployment
+NAME          AGE
+k8s-analysis  0s
+
+==&gt; v1/Pod(related)
+
+NAME                           READY  STATUS             RESTARTS  AGE
+k8s-analysis-6d76cfddb5-7s42l  0/1    ContainerCreating  0         0s
+$ kubectl get po
+NAME                                    READY     STATUS      RESTARTS   AGE
+k8s-analysis-6d76cfddb5-7s42l           1/1       Running     0          1m
+$ kubectl exec -it k8s-analysis-6d76cfddb5-7s42l -- /bin/sh
+/app $</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cleanup">1.4.2. Cleanup</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ make delete
+helm delete --purge k8s-analysis
+release "k8s-analysis" deleted</code></pre>
+</div>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/activity.svg" alt="activity" width="79" height="321">
+<img src="images/state-machine.svg" alt="state machine" width="445" height="511">
 </div>
-<div class="title">Figure 1. Activity diagram</div>
+<div class="title">Figure 1. State machine</div>
+</div>
 </div>
 <div class="sect3">
-<h4 id="_creating_an_application">1.4.1. Creating an application</h4>
+<h4 id="_creating_and_assigning_a_cluster_role">1.4.3. Creating and assigning a cluster role</h4>
 <div class="paragraph">
-<p>To create a simple Ratpack application we write
-the following code:</p>
+<p>To create a cluster role for our service account, apply the following cluster role definition:</p>
 </div>
 <div class="listingblock">
-<div class="title">Simple Groovy Ratpack application</div>
+<div class="title">Cluster role definition</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="groovy"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+<pre class="pygments highlight"><code data-lang="yaml"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
  2
  3
  4
@@ -652,17 +675,33 @@ the following code:</p>
  8
  9
 10
-11</div></td><td class="code"><span></span><span class="tok-kn">package</span> <span class="tok-n">com</span><span class="tok-o">.</span><span class="tok-na">mrhaki</span>
-
-<span class="tok-kn">import</span> <span class="tok-nn">static</span> <span class="tok-n">ratpack</span><span class="tok-o">.</span><span class="tok-na">groovy</span><span class="tok-o">.</span><span class="tok-na">Groovy</span><span class="tok-o">.</span><span class="tok-na">ratpack</span>
-
-<span class="tok-n">ratpack</span> <span class="tok-o">{</span>
-    <span class="tok-n">handlers</span> <span class="tok-o">{</span>
-        <span class="tok-n">get</span> <span class="tok-o">{</span>
-<span class="hll">            <span class="tok-n">render</span> <span class="tok-s2">&quot;Hello World!&quot;</span> <i class="conum" data-value="1"></i><b>(1)</b>
-</span>        <span class="tok-o">}</span>
-    <span class="tok-o">}</span>
-<span class="tok-o">}</span>
+11
+12
+13
+14
+15
+16
+17
+18
+19</div></td><td class="code"><span></span><span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">kind</span><span class="tok-p tok-p-Indicator">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">ClusterRole</span>
+<span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">apiVersion</span><span class="tok-p tok-p-Indicator">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">rbac.authorization.k8s.io/v1</span>
+<span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">metadata</span><span class="tok-p tok-p-Indicator">:</span>
+  <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">name</span><span class="tok-p tok-p-Indicator">:</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">cluster-reader</span>
+<span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">rules</span><span class="tok-p tok-p-Indicator">:</span>
+<span class="tok-p tok-p-Indicator">-</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">apiGroups</span><span class="tok-p tok-p-Indicator">:</span> <span class="tok-p tok-p-Indicator">[</span><span class="tok-s">&quot;&quot;</span><span class="tok-p tok-p-Indicator">]</span>
+  <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">resources</span><span class="tok-p tok-p-Indicator">:</span> <span class="tok-p tok-p-Indicator">[</span><span class="tok-s">&quot;nodes&quot;</span><span class="tok-p tok-p-Indicator">]</span>
+  <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">verbs</span><span class="tok-p tok-p-Indicator">:</span> <span class="tok-p tok-p-Indicator">[</span><span class="tok-s">&quot;get&quot;</span><span class="tok-p tok-p-Indicator">,</span> <span class="tok-s">&quot;watch&quot;</span><span class="tok-p tok-p-Indicator">,</span> <span class="tok-s">&quot;list&quot;</span><span class="tok-p tok-p-Indicator">]</span>
+<span class="tok-p tok-p-Indicator">-</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">apiGroups</span><span class="tok-p tok-p-Indicator">:</span> <span class="tok-p tok-p-Indicator">[</span><span class="tok-s">&quot;&quot;</span><span class="tok-p tok-p-Indicator">]</span>
+  <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">resources</span><span class="tok-p tok-p-Indicator">:</span> <span class="tok-p tok-p-Indicator">[</span><span class="tok-s">&quot;pods/exec&quot;</span><span class="tok-p tok-p-Indicator">]</span>
+  <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">verbs</span><span class="tok-p tok-p-Indicator">:</span> <span class="tok-p tok-p-Indicator">[</span><span class="tok-s">&quot;create&quot;</span><span class="tok-p tok-p-Indicator">]</span>
+<span class="hll"><span class="tok-p tok-p-Indicator">-</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">apiGroups</span><span class="tok-p tok-p-Indicator">:</span> <span class="tok-p tok-p-Indicator">[</span><span class="tok-s">&quot;rbac.authorization.k8s.io&quot;</span><span class="tok-p tok-p-Indicator">]</span> <i class="conum" data-value="1"></i><b>(1)</b>
+</span>  <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">resources</span><span class="tok-p tok-p-Indicator">:</span>
+  <span class="tok-p tok-p-Indicator">-</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">rolebindings</span>
+  <span class="tok-p tok-p-Indicator">-</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">clusterrolebindings</span>
+  <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">verbs</span><span class="tok-p tok-p-Indicator">:</span>
+  <span class="tok-p tok-p-Indicator">-</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">get</span>
+  <span class="tok-p tok-p-Indicator">-</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">watch</span>
+  <span class="tok-p tok-p-Indicator">-</span> <span class="tok-l tok-l-Scalar tok-l-Scalar-Plain">list</span>
 </td></tr></table></code></pre>
 </div>
 </div>
@@ -670,28 +709,20 @@ the following code:</p>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Render output</td>
+<td>Requests for RBAC-related data will fail if this group is not set.</td>
 </tr>
 </table>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_second_chapter">1.5. Second chapter</h3>
+<h3 id="_the_great_american_novel">1.5. The Great American Novel</h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/doc-storage.svg" alt="doc storage" width="260" height="224">
+<img src="images/doc-storage.svg" alt="doc storage" width="940" height="462">
 </div>
 <div class="title">Figure 2. ASCII-based artwork</div>
 </div>
-<div class="imageblock">
-<div class="content">
-<img src="images/logo.png" alt="Company logo">
-</div>
-<div class="title">Figure 3. Logo bitmap courtesy of <a href="https://github.com/pigment/fake-logos" class="bare">https://github.com/pigment/fake-logos</a></div>
-</div>
-<div class="sect3">
-<h4 id="_section">1.5.1. Section</h4>
 <div class="admonitionblock caution">
 <table>
 <tr>
@@ -704,33 +735,119 @@ This looks important, so be sure not to forget it.
 </tr>
 </table>
 </div>
-</div>
 <div class="sect3">
-<h4 id="_markdown">1.5.2. MARKDOWN</h4>
+<h4 id="_markdown">1.5.1. MARKDOWN</h4>
 <div class="sect4">
 <h5 id="_sample_markdown_document">Sample Markdown document</h5>
 <div class="paragraph">
-<p>This is some text <span class="emoji">😄</span>.</p>
-</div>
-<div class="paragraph">
-<p>This sequence slows from exponential progression to Iccanobif:</p>
-</div>
-<div class="paragraph">
-<p>011235</p>
+<p>In HTML the following should appear as an emoji: <span class="emoji">😄</span>.</p>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_sample_repo">1.5.3. SAMPLE-REPO</h4>
+<h4 id="_sample_repo">1.5.2. SAMPLE-REPO</h4>
 <div class="sect4">
-<h5 id="_sample_repo_2">Sample-repo</h5>
-
+<h5 id="_k8s_network_policy_viewer">k8s-network-policy-viewer</h5>
+<div class="paragraph">
+<p>The network policy viewer visualizes the pod network. It is far from
+complete, but basic isolation rules can be represented in JSON, YAML or
+dot (Graphviz).</p>
 </div>
-<div class="sect4">
-<h5 id="_nested_folder">NESTED-FOLDER</h5>
+<div class="paragraph">
+<p><span class="image"><img src="images/network-policy-viewer.svg" alt="SVG output"></span></p>
+</div>
+<div class="paragraph">
+<p>In this example, the names of the namespaces match their respective
+network policies, the exception being the <code>global</code> namespace (which has
+none) and <code>ingress-isolated-whitelist</code> (which has two).</p>
+</div>
+<div class="paragraph">
+<p>The policies <code>isolated</code>, <code>egress-isolated</code>, <code>ingress-isolated</code> each
+apply to the namespace as a whole.</p>
+</div>
+<div class="paragraph">
+<p><code>ingress-isolated-whitelist</code> whitelists <code>httpd-bob</code>, which is why
+<code>httpd-bob</code> can be reached from <code>httpd-alice</code> and the generic httpd pod
+in the namespace.</p>
+</div>
 <div class="sect5">
-<h6 id="_nested_folder_2">Nested folder</h6>
-
+<h6 id="_deployment">Deployment</h6>
+<div class="paragraph">
+<p>Install the helm chart defined in the folder <a href="./chart">chart</a>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ make -C chart install</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Point your browser to the URL given in <code>values.yaml</code>
+(e.g. <code><a href="http://minikube.info/" class="bare">http://minikube.info/</a></code>).</p>
+</div>
+<div class="paragraph">
+<p>The available endpoints are:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Endpoint</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Show graph</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/health</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Health endpoint</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">/api/v1/metrics</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Metrics endpoint</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_build_2">Build</h6>
+<div class="paragraph">
+<p>The build steps are the following:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ go mod download
+$ go get
+$ go vet
+$ go test -v
+$ go build -o k8s-network-policy-viewer .</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>make build</code> will run these steps in a two-stage docker build process.</p>
+</div>
+<div class="paragraph">
+<p>Alternatively, you can use the default image
+<a href="https://hub.docker.com/r/gerald1248/k8s-network-policy-viewer">k8s-network-policy-viewer</a>.
+This is also the image referenced in the helm chart.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_testdata">Testdata</h6>
+<div class="paragraph">
+<p>To build the sample data, run:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ make -C testdata init
+$ make -C testdata create</pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -748,7 +865,7 @@ This looks important, so be sure not to forget it.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-01-09 17:32:28 UTC
+Last updated 2019-01-10 00:36:42 UTC
 </div>
 </div>
 <script type="text/x-mathjax-config">

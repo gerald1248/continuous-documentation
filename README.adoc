@@ -1,4 +1,4 @@
-= Continuous documentation
+= About this repo
 
 image:https://img.shields.io/docker/automated/gerald1248/continuous-documentation.svg[Docker
 Automated]
@@ -29,13 +29,12 @@ determines the name of the PDF outputl. (The web page always takes
 `index.html`.)
 
 .Configuration
-[source,json,linenums,highlight='4']
+[source,json,linenums,highlight='4-6']
 ----
 {
   "title": "Continuous documentation",
   "filename": "continuous-documentation",
   "substitutions": { <1>
-    "124816": "011235",
     "Fibonacci": "Iccanobif"
   }
 }

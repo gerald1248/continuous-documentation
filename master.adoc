@@ -29,11 +29,6 @@ include::./test-content/markdown/README.md.adoc[]
 
 include::./test-content/sample-repo/README.md.adoc[]
 
-:leveloffset: 4
-= NESTED-FOLDER
-
-include::./test-content/sample-repo/nested-folder/README.md.adoc[]
-
 :leveloffset: 1
 
 = Get the PDF

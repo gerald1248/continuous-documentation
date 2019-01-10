@@ -1,44 +1,89 @@
-= First chapter
+# k8s-analysis
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Analysis pod for debugging: deploy within your project and run `ab`, `dig`, `netstat`, `nslookup`, `telnet`, `traceroute`, `wget`, and so on as well as database clients for MySQL and PostgreSQL.
 
-* Bullet point 1
+## Install
+```
+$ make install
+helm install --name=k8s-analysis .
+NAME:   k8s-analysis
+LAST DEPLOYED: Mon Oct  1 00:12:28 2018
+NAMESPACE: default
+STATUS: DEPLOYED
 
-* Bullet point 2
+RESOURCES:
+==> v1/Deployment
+NAME          AGE
+k8s-analysis  0s
 
-* Bullet point 3
+==> v1/Pod(related)
 
-.Activity diagram
-[plantuml, activity, svg]
+NAME                           READY  STATUS             RESTARTS  AGE
+k8s-analysis-6d76cfddb5-7s42l  0/1    ContainerCreating  0         0s
+$ kubectl get po
+NAME                                    READY     STATUS      RESTARTS   AGE
+k8s-analysis-6d76cfddb5-7s42l           1/1       Running     0          1m
+$ kubectl exec -it k8s-analysis-6d76cfddb5-7s42l -- /bin/sh
+/app $
+```
+
+## Cleanup
+```
+$ make delete
+helm delete --purge k8s-analysis
+release "k8s-analysis" deleted
+```
+
+.State machine
+[plantuml, state-machine, svg]
 ----
 @startuml
 
-(*) --> "Start"
---> "Middle"
---> "End"
---> (*)
+(*) --> "Screen press" as DOWN
+if "" then
+-down->[move left/right] "Rotate left/right" as MOVE
+else
+-down->[long press] "Accelerate" as THRUST
+else
+-down->[short press] "Fire" as FIRE
+
+MOVE -->[pause movement] THRUST
+THRUST -->[move left/right] MOVE
+
+MOVE --> "Screen press ends" as UP
+THRUST --> UP
+FIRE --> UP
+
+UP --> (*)
 
 @enduml
 ----
 
-== Creating an application
+== Creating and assigning a cluster role
  
-To create a simple Ratpack application we write
-the following code:
+To create a cluster role for our service account, apply the following cluster role definition:
  
-.Simple Groovy Ratpack application
-[source,groovy,linenums,highlight='8']
+.Cluster role definition
+[source,yaml,linenums,highlight='12']
 ----
-package com.mrhaki
- 
-import static ratpack.groovy.Groovy.ratpack
- 
-ratpack {
-    handlers {
-        get {
-            render "Hello World!" // <1>
-        }
-    }
-}
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: cluster-reader
+rules:
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["get", "watch", "list"]
+- apiGroups: [""]
+  resources: ["pods/exec"]
+  verbs: ["create"]
+- apiGroups: ["rbac.authorization.k8s.io"] <1>
+  resources:
+  - rolebindings
+  - clusterrolebindings
+  verbs:
+  - get
+  - watch
+  - list
 ----
-<1> Render output
+<1> Requests for RBAC-related data will fail if this group is not set.
